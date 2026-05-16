@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TikRace Live</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Top podium (HTML — emojis renderizan bien) ──────────────────────── -->
+  <div id="podium-bar">
+    <div id="top3-title">🏆 TOP 3 🏆</div>
+    <button id="btn-reconnect" title="Reconectar TikTok">📡 Sin conexión</button>
+    <div id="podium-slots">
+      <div class="pod-slot" id="pod-2">
+        <div class="pod-medal">🥈</div>
+        <img class="pod-flag" src="" alt="" style="visibility:hidden" />
+        <div class="pod-name">—</div>
+        <div class="pod-wins">0 WINS</div>
+        <div class="pod-base silver"></div>
+      </div>
+      <div class="pod-slot gold-slot" id="pod-1">
+        <div class="pod-medal">🥇</div>
+        <img class="pod-flag" src="" alt="" style="visibility:hidden" />
+        <div class="pod-name">—</div>
+        <div class="pod-wins">0 WINS</div>
+        <div class="pod-base gold"></div>
+      </div>
+      <div class="pod-slot" id="pod-3">
+        <div class="pod-medal">🥉</div>
+        <img class="pod-flag" src="" alt="" style="visibility:hidden" />
+        <div class="pod-name">—</div>
+        <div class="pod-wins">0 WINS</div>
+        <div class="pod-base bronze"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Race canvas (below podium) ──────────────────────────────────────── -->
+  <canvas id="game"></canvas>
+
+  <!-- ── Fullscreen prompt ────────────────────────────────────────────────── -->
+  <div id="fs-prompt">
+    <div id="fs-card">
+      <div style="font-size:48px">🏆</div>
+      <div style="font-size:22px;font-weight:900;color:#ffd700;margin:8px 0">TikRace Live</div>
+      <div style="font-size:14px;color:rgba(255,255,255,0.7);margin-bottom:20px">Toca para comenzar</div>
+      <button id="fs-btn">▶ INICIAR</button>
+    </div>
+  </div>
+
+  <!-- ── Win flash ────────────────────────────────────────────────────────── -->
+  <div id="win-flash">
+    <div id="win-card">
+      <img id="win-flag" src="" alt="" />
+      <div id="win-text"></div>
+      <div id="win-count"></div>
+    </div>
+  </div>
+
+  <!-- ── Gift feed ────────────────────────────────────────────────────────── -->
+  <div id="feed"></div>
+
+  <!-- ── Control panel ────────────────────────────────────────────────────── -->
+  <div id="panel">
+    <div id="panel-header">
+      <span>🎮 TikRace Control</span>
+      <span id="toggle-icon">▼</span>
+    </div>
+    <div id="panel-body" class="hidden">
+      <div class="row">
+        <input id="inp-user" type="text" placeholder="@usuario TikTok" />
+        <button id="btn-connect">Conectar</button>
+      </div>
+      <div id="tiktok-status" class="status offline">● Sin conexión</div>
+      <hr />
+      <div class="label">Prueba rápida:</div>
+      <div class="row">
+        <select id="sel-country">
+          <option value="MX">México</option>
+          <option value="US">USA</option>
+          <option value="ES">España</option>
+          <option value="CO">Colombia</option>
+          <option value="CL">Chile</option>
+          <option value="AR">Argentina</option>
+          <option value="EC">Ecuador</option>
+          <option value="VE">Venezuela</option>
+          <option value="GT">Guatemala</option>
+          <option value="BR">Brasil</option>
+          <option value="BO">Bolivia</option>
+          <option value="HN">Honduras</option>
+          <option value="SV">El Salvador</option>
+          <option value="CR">Costa Rica</option>
+          <option value="NI">Nicaragua</option>
+          <option value="PA">Panamá</option>
+          <option value="PE">Perú</option>
+          <option value="PY">Paraguay</option>
+          <option value="GY">Guyana</option>
+          <option value="CU">Cuba</option>
+          <option value="DO">Rep. Dom.</option>
+          <option value="PR">Puerto Rico</option>
+          <option value="UY">Uruguay</option>
+        </select>
+        <button id="btn-gift">🎁 Enviar</button>
+      </div>
+      <div class="row">
+        <select id="sel-gift">
+          <option value="rosa">🌹 Rosa</option>
+          <option value="rosa blanca">🤍 Rosa blanca</option>
+          <option value="gg">🎮 GG</option>
+          <option value="tiktok">🎵 TikTok</option>
+          <option value="finger heart">🤞 Finger Heart</option>
+          <option value="quiéreme">❤️ Quiéreme</option>
+          <option value="guiño, guiño">😉 Guiño guiño</option>
+          <option value="eres increíble">🐱 Eres increíble</option>
+          <option value="alas de guardián">🕊️ Alas guardián</option>
+          <option value="rebanada de pastel">🎂 Rebanada pastel</option>
+          <option value="maracas">🪇 Maracas</option>
+          <option value="es maíz">🌽 Es maíz</option>
+          <option value="cono de helado">🍦 Cono helado</option>
+          <option value="barra fluoresce">🖊️ Barra fluor.</option>
+          <option value="te adoro">🥰 Te adoro</option>
+          <option value="fragmento de e">🎖️ Fragmento</option>
+          <option value="pop">🎵 Pop</option>
+          <option value="estilo libre">🎹 Estilo libre</option>
+          <option value="clásicos">📻 Clásicos</option>
+        </select>
+        <input id="inp-qty" type="number" value="1" min="1" max="100" style="width:46px;flex:none" placeholder="x" />
+      </div>
+      <button id="btn-reset" style="width:100%;margin-top:2px">🗑️ Resetear todo</button>
+    </div>
+  </div>
+
+  <!-- ── Animador ──────────────────────────────────────────────────────────── -->
+  <div id="animador">
+    <div id="animador-bubble"></div>
+    <canvas id="animador-canvas" width="58" height="86"></canvas>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
